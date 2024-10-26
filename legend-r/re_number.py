@@ -33,7 +33,7 @@ def load_templates(template_dir):
 
     return templates
 
-def get_current_coordinate(region=(45, 778, 100, 20)):
+def get_current_coordinate(region=(45, 778, 135, 20)):
     template_dir = 'number/'
     templates = load_templates(template_dir)
 

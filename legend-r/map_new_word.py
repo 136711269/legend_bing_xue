@@ -1,7 +1,7 @@
 import opration, re_number, Find_Pic
 
 
-def gj_long_ling_di():
+def gj_xin_shi_jie():
     opration.go_home()
     re_number.move_to_target((299, 331))
     opration.move_pic_click('img/高级传送/新世界.png')
@@ -13,7 +13,7 @@ def gj_long_ling_di():
         xinshijie_tag = Find_Pic.find_image_on_screen('img/高级传送/新世界-地图.png')
         if not xinshijie_tag:
             break
-        opration.auto_monster(4)
+        opration.auto_monster(monster_num=4)
         opration.use_random()
         random_num += 1
         if random_num > 100:
@@ -34,6 +34,6 @@ def gj_long_ling_di():
 
 
 
-if __name__ == '__main__':
 
-    gj_long_ling_di()
+if __name__ == '__main__':
+    gj_xin_shi_jie()
