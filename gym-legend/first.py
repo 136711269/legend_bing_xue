@@ -1,76 +1,101 @@
 import gym
 from gym import spaces
 import numpy as np
+import pyautogui
 from stable_baselines3 import PPO
+import Find_Pic  # 假设这是您的图片查找模块
 
 
-class LegendFixedPlayerEnv(gym.Env):
+class LegendGameEnv(gym.Env):
     def __init__(self):
-        super(LegendFixedPlayerEnv, self).__init__()
-        # 状态空间：包含怪物的相对坐标和角度
-        self.observation_space = spaces.Box(low=-500, high=500, shape=(10, 3), dtype=np.float32)  # 每个怪物的x, y和角度
+        super(LegendGameEnv, self).__init__()
 
-        # 动作空间：8种移动 + 攻击
+        # 定义状态空间：包含怪物的相对坐标
+        self.observation_space = spaces.Box(low=-500, high=500, shape=(10, 2), dtype=np.float32)
+
+        # 定义动作空间：8种移动 + 攻击
         self.action_space = spaces.Discrete(9)
 
-        # 初始化环境
+        self.reference_point = (533, 309)  # 角色在屏幕中心
         self.reset()
 
     def reset(self):
-        # 初始化怪物位置并转换为相对坐标和角度
-        self.monsters = [self._generate_monster() for _ in range(np.random.randint(1, 10))]
+        # 重置环境并返回初始状态
         return self._get_obs()
 
-    def _generate_monster(self):
-        x, y = np.random.randint(-500, 500, size=2)
-        angle = np.arctan2(y, x)
-        return np.array([x, y, angle])
-
     def _get_obs(self):
-        # 返回每个怪物的相对x, y位置以及角度信息
-        return np.array(self.monsters[:10])
+        # 获取当前怪物相对于屏幕的坐标
+        far_coordinates, close_coordinates = Find_Pic.find_and_process_targets()
+
+        # 确保返回形状为 (10, 2) 的数组
+        if len(far_coordinates) < 10:
+            # 如果怪物少于10个，用零填充
+            far_coordinates = np.array(far_coordinates + [[0, 0]] * (10 - len(far_coordinates)))
+        else:
+            far_coordinates = np.array(far_coordinates)[:10]  # 只取前10个怪物
+
+        return far_coordinates
+
+
 
     def step(self, action):
-        reward = -0.1  # 每一步的时间惩罚
+        reward = 0
         done = False
 
         if action < 8:  # 移动
-            movement = [[0, 10], [0, -10], [-10, 0], [10, 0], [-7, 7], [-7, -7], [7, 7], [7, -7]]
-            self.monsters = [self._update_monster_position(monster, movement[action]) for monster in self.monsters]
+            direction = self._get_direction(action)
+            self._move_character(direction)
         elif action == 8:  # 攻击
-            reward += self._attack_monsters()
+            reward += self.click_attack()
 
-        # 检查是否怪物清理完毕
-        if not self.monsters:
+        # 更新观察
+        obs = self._get_obs()
+
+        # 判断是否没有怪物，如果是则结束
+        if len(obs) == 0:
             done = True
 
-        return self._get_obs(), reward, done, {}
+        return obs, reward, done, {}
 
-    def _update_monster_position(self, monster, movement):
-        # 更新怪物相对位置和角度信息
-        monster[:2] -= movement  # 更新相对坐标
-        monster[2] = np.arctan2(monster[1], monster[0])  # 计算相对角度
-        return monster
+    def _get_direction(self, action):
+        # 定义移动的目标坐标
+        target_coordinates = {
+            0: (544, 182),  # up
+            1: (538, 495),  # down
+            2: (350, 310),  # left
+            3: (769, 303),  # right
+            4: (382, 159),  # up_left
+            5: (691, 173),  # up_right
+            6: (388, 467),  # down_left
+            7: (711, 435)  # down_right
+        }
+        return target_coordinates[action]
 
-    def _attack_monsters(self):
-        reward = 0
-        to_remove = []
-        for i, monster in enumerate(self.monsters):
-            if np.linalg.norm(monster[:2]) < 50:  # 距离小于50则攻击命中
-                reward += 10
-                to_remove.append(i)
+    def _move_character(self, target):
+        # 使用右键点击并移动到指定坐标
+        x, y = target
+        pyautogui.mouseDown(button='right')
+        pyautogui.moveTo(x, y, duration=0.5)
+        pyautogui.mouseUp(button='right')
+        print(f"Moving character to {target}")
 
-        # 一次性击中多个怪物的奖励
-        if len(to_remove) > 1:
-            reward += 5 * len(to_remove)
+    def click_attack(self):
+        # 查找“自动挂机”标记并点击攻击
+        zidong_tag = Find_Pic.find_image_on_screen('../legend-r/img/自动挂机.png')
+        if zidong_tag:
+            pyautogui.click(zidong_tag[0], zidong_tag[1])
+            return 10  # 每次成功攻击的奖励
+        return 0
 
-        # 移除被击中的怪物
-        self.monsters = [m for i, m in enumerate(self.monsters) if i not in to_remove]
-        return reward
 
 
-# 创建和训练模型
-env = LegendFixedPlayerEnv()
+
+
+# 训练模型
+env = LegendGameEnv()
 model = PPO("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=10000)
-model.save("legend_fixed_player_model")
+
+# 保存模型
+model.save("legend_agent_model")
+print("Model saved as 'legend_agent_model'")

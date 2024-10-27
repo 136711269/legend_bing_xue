@@ -17,7 +17,7 @@ def gj_hua_shan():
         re_number.move_to_target((37, 38))
 
     opration.click_zidong()
-    opration.auto_monster(3)
+    opration.auto_monster(monster_num=3)
 
     opration.go_home()
 

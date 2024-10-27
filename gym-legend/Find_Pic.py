@@ -70,7 +70,7 @@ def count_close_coordinates(coordinates, reference_point, distance_threshold=200
     return len(close_coords), close_coords
 
 # 查找屏幕上所有匹配的目标图像，并筛选和处理
-def find_and_process_targets(target_image_path='img/怪物.png', reference_point=(533, 309), confidence=0.95, region=(0, 0, 1020, 550)):
+def find_and_process_targets(target_image_path='../legend-r/img/怪物.png', reference_point=(533, 309), confidence=0.95, region=(0, 0, 1020, 550)):
     # 调用find_all_images_on_screen获取所有匹配目标的坐标
     target_centers = find_all_images_on_screen(target_image_path, confidence, region)
 
@@ -104,6 +104,6 @@ def is_monster():
 
 if __name__ == '__main__':
     time.sleep(1)
-    print(find_image_on_screen('img/冰雪之城/圣地神.png',confidence=0.8) )
+    print(find_image_on_screen('img/怪物-红点.png',confidence=0.95, region=(861, 31, 173, 158)) )
 
 

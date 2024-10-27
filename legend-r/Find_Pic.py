@@ -95,8 +95,41 @@ def find_and_process_targets(target_image_path='img/怪物.png', reference_point
 #
     return far_coordinates, close_coordinates
 
-# 定义鼠标事件
-# 定义鼠标事件
+
+def find_red_color():
+    # 获取屏幕截图
+    screenshot = pyautogui.screenshot(region=(861, 31, 173, 158))
+    screenshot_np = np.array(screenshot)
+
+    # 转换颜色空间，从RGB到BGR
+    screenshot_bgr = cv2.cvtColor(screenshot_np, cv2.COLOR_RGB2BGR)
+
+    # 定义红色的范围
+    lower_red = np.array([0, 0, 255])  # BGR
+    upper_red = np.array([100, 100, 255])  # 可能的红色范围
+
+    # 创建掩码
+    mask = cv2.inRange(screenshot_bgr, lower_red, upper_red)
+
+    # 找到红色区域的轮廓
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    red_coordinates = []
+
+    if red_coordinates:
+        print('发现怪物')
+    else:
+        print('没有发现怪物')
+
+    for contour in contours:
+        # 计算轮廓的边界框
+        x, y, w, h = cv2.boundingRect(contour)
+        red_coordinates.append((x + w // 2, y + h // 2))  # 记录中心点
+
+    return red_coordinates
+
+
+
 
 def is_monster():
     monster_path = 'img/monster'
@@ -104,6 +137,12 @@ def is_monster():
 
 if __name__ == '__main__':
     time.sleep(1)
-    print(find_image_on_screen('img/冰雪之城/圣地神.png',confidence=0.8) )
+    # res =find_image_on_screen('img/高级传送/神魔秘境-秘境使者.png')
+
+    res = find_red_color()
+    print(res)
+    if res:
+        for i in range(len(res)):
+            print(res[i][0] + 861, res[i][1] + 31)
 
 

@@ -107,11 +107,11 @@ def move_pic_click(pic_path, region=(0, 0, 1031, 800),confidence=0.9):
             print(f'点击失败{pic_path}')
         i += 1
 
-def move_pic_click_jia(pic_path, region=(0, 0, 1031, 800)):
+def move_pic_click_jia(pic_path, region=(0, 0, 1031, 800), confidence=0.9):
     i = 0
     while i < 10:
         time.sleep(0.5)
-        pic_tag = Find_Pic.find_image_on_screen(pic_path, region=region)
+        pic_tag = Find_Pic.find_image_on_screen(pic_path, region=region, confidence=confidence)
         if pic_tag:
             print(pic_path)
             move_click(pic_tag[0] + region[0], pic_tag[1]+region[1])
@@ -161,7 +161,7 @@ def auto_monster(monster_num=7):
         far_master, close_monster = Find_Pic.find_and_process_targets()
         # print(far_master)
         # 判断是否有怪
-        if len(close_monster) < monster_num:
+        if len(close_monster) < 7:
 
             if far_master:
                 click_monster(far_master[0][0], far_master[0][1] + 46)
@@ -175,7 +175,34 @@ def auto_monster(monster_num=7):
             start_coodr = current_coodr
         else:
             close_monster_tag =0
-        if close_monster_tag > 7:
+        if close_monster_tag > monster_num:
+            break
+
+def auto_monster_1(monster_num=7):
+    start_coodr = re_number.get_current_coordinate()
+    close_monster_tag = 0
+    while True:
+        mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+        if mengchong_tag:
+            break
+        time.sleep(3)
+        guan_bi()
+        far_master, close_monster = Find_Pic.find_and_process_targets()
+        # print(far_master)
+        # 判断是否有怪
+        if len(close_monster) < 7:
+
+            if far_master:
+                click_monster(far_master[0][0], far_master[0][1] + 46)
+                close_monster_tag = 0
+
+        click_zidong()
+        red = Find_Pic.find_red_color()
+        if not red:
+            close_monster_tag += 1
+        else:
+            close_monster_tag = 0
+        if close_monster_tag > monster_num:
             break
 
 def eat_yuan_bao():
