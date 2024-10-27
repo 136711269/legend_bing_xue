@@ -102,7 +102,7 @@ target_coordinates = {
 
 
 
-def move_to_target( target_coord, region=(45, 778, 100, 20)):
+def move_to_target( target_coord, region=(45, 778, 140, 20)):
 
     try:
         start_time = time.time()
@@ -143,7 +143,7 @@ def move_to_target( target_coord, region=(45, 778, 100, 20)):
 # 示例使用
 if __name__ == "__main__":
     # 获取窗口句柄
-    window_handle = win32gui.FindWindow(None, '热血华山05区(16:00)')
+    window_handle = win32gui.FindWindow(None, '热血华山15区(16:00)')
     # 移动窗口到0，0位置
     win32gui.SetWindowPos(window_handle, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
     # 激活窗口

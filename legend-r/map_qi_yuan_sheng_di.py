@@ -22,10 +22,11 @@ def gj_shen_di_shen():
     opration.move_pic_click('img/冰雪之城/冰雪之城.png')
     re_number.move_to_target((164, 63))
     opration.move_pic_click('img/冰雪之城/起源圣地.png')
-    opration.move_pic_click('img/冰雪之城/圣地神.png')
+    opration.move_pic_click('img/冰雪之城/圣地神.png', confidence=0.8)
     opration.move_pic_click('img/冰雪之城/圣地神-我要前往.png')
     opration.click_zidong()
     opration.auto_monster()
+    opration.go_home()
 
 
 def gj_shen_di_shen2():
@@ -59,6 +60,6 @@ def gj_shen_di_shen3():
         gj_shen_di_shen2()
         gj_shen_di_shen1()
 if __name__ == '__main__':
-    gj_shen_di_shen2()
-    gj_shen_di_shen1()
+    # gj_shen_di_shen2()
+    # gj_shen_di_shen1()
     gj_shen_di_shen()

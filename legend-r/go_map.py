@@ -96,11 +96,11 @@ def gua_ji_huo_long():
 
 
 
-
+import map_shen_mo_liu_chong_tian
 
 
 if __name__ == '__main__':
-    # gua_ji_huo_long()
+
     while True:
         time.sleep(3)
         current_time = time.localtime()
@@ -110,10 +110,10 @@ if __name__ == '__main__':
                 map_huashan.gj_dian_feng()
             map_huashan.gj_hua_shan()
             opration.eat_yuan_bao()
-            gua_ji_huo_long()
-            opration.eat_yuan_bao()
+            # gua_ji_huo_long()
+            # opration.eat_yuan_bao()
             map_qi_yuan_sheng_di.gj_shen_di_shen3()
-            opration.go_home()
+            map_shen_mo_liu_chong_tian.go_shen_mo_mi_jing_6()
 
         mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
         if mengchong_tag:

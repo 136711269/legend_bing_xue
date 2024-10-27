@@ -4,10 +4,10 @@ import pyautogui
 import cv2
 import numpy as np
 
-def find_image_on_screen(target_image_path, confidence=0.90):
+def find_image_on_screen(target_image_path, confidence=0.90, region=(0, 0, 1031, 800)):
     # 读取目标图像和屏幕截图
     target_image = cv2.imdecode(np.fromfile(target_image_path, dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
-    screen = pyautogui.screenshot(region=(0, 0, 1031, 800))
+    screen = pyautogui.screenshot(region=region)
 
     # 将屏幕截图转换为灰度图像
     screen_gray = cv2.cvtColor(np.array(screen), cv2.COLOR_RGB2GRAY)
@@ -86,7 +86,7 @@ def find_and_process_targets(target_image_path='img/怪物.png', reference_point
         if far_coordinates:
             # 查找距离最远的坐标
             farthest_coord = max(far_coordinates, key=lambda coord: calculate_distance(coord, reference_point))
-            print(f"点击距离最远的坐标: {farthest_coord}")
+            print(f"点击距离最远的怪物: {farthest_coord}")
             # 模拟点击操作
             # re_number.move_to_target((farthest_coord[0], farthest_coord[1] + 46))
             # pyautogui.click(farthest_coord[0], farthest_coord[1] + 46)
@@ -103,7 +103,7 @@ def is_monster():
 
 
 if __name__ == '__main__':
-    time.sleep(2)
-    print(find_image_on_screen('img/随机石.png', confidence=0.7))
+    time.sleep(1)
+    print(find_image_on_screen('img/冰雪之城/圣地神.png',confidence=0.8) )
 
 

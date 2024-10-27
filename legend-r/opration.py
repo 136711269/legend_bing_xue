@@ -93,11 +93,11 @@ def write_number(number_path, number):
 
 
 
-def move_pic_click(pic_path):
+def move_pic_click(pic_path, region=(0, 0, 1031, 800),confidence=0.9):
     i = 0
     while i < 10:
         time.sleep(0.5)
-        pic_tag = Find_Pic.find_image_on_screen(pic_path)
+        pic_tag = Find_Pic.find_image_on_screen(pic_path, region=region, confidence=confidence)
         if pic_tag:
             print(pic_path)
             move_click(pic_tag[0], pic_tag[1])
@@ -107,6 +107,19 @@ def move_pic_click(pic_path):
             print(f'点击失败{pic_path}')
         i += 1
 
+def move_pic_click_jia(pic_path, region=(0, 0, 1031, 800)):
+    i = 0
+    while i < 10:
+        time.sleep(0.5)
+        pic_tag = Find_Pic.find_image_on_screen(pic_path, region=region)
+        if pic_tag:
+            print(pic_path)
+            move_click(pic_tag[0] + region[0], pic_tag[1]+region[1])
+            time.sleep(0.5)
+            break
+        else:
+            print(f'点击失败{pic_path}')
+        i += 1
 
 def move_up_left(sec):
     time.sleep(0.5)
@@ -173,8 +186,12 @@ def eat_yuan_bao():
     move_pic_click_left('img/整理.png')
     time.sleep(1)
     res = Find_Pic.find_all_images_on_screen('img/元宝.png', confidence=0.95)
+    res_lingqi = Find_Pic.find_all_images_on_screen('img/灵气.png', confidence=0.95)
     if res:
         for i in res:
+            click_right(i[0], i[1])
+    if res_lingqi:
+        for i in res_lingqi:
             click_right(i[0], i[1])
     move_pic_click_left('img/整理.png')
     time.sleep(1)
