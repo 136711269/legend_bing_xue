@@ -9,7 +9,7 @@ def go_huo_long3():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/火龙洞直飞.png')
     opration.move_pic_click('img/高级传送/火龙洞3层.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 def go_huo_long4():
     opration.go_home()
@@ -17,7 +17,7 @@ def go_huo_long4():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/火龙洞直飞.png')
     opration.move_pic_click('img/高级传送/火龙洞4层.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 def go_huo_long5():
     # opration.go_home()
@@ -25,7 +25,7 @@ def go_huo_long5():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/火龙洞直飞.png')
     opration.move_pic_click('img/高级传送/火龙洞5层.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 def go_huo_long6():
     # opration.go_home()
@@ -33,7 +33,7 @@ def go_huo_long6():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/火龙洞直飞.png')
     opration.move_pic_click('img/高级传送/火龙洞6层.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 def go_huo_long7():
     # opration.go_home()
@@ -41,7 +41,7 @@ def go_huo_long7():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/火龙洞直飞.png')
     opration.move_pic_click('img/高级传送/火龙洞7层.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 def go_gu_du_2(id = 2):
     opration.go_home()
@@ -52,7 +52,8 @@ def go_gu_du_2(id = 2):
     elif id == 1:
         opration.move_pic_click('img/高级传送/孤独1.png')
     opration.move_pic_click('img/高级传送/我要进入.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.kai_kuangbao()
+    opration.click_zidong()
 
 
 
@@ -63,7 +64,7 @@ def go_shen_long_ling_di():
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/神龙的圣地.png')
     opration.move_pic_click('img/高级传送/2w元宝进入.png')
-    opration.move_pic_click('img/自动挂机.png')
+    opration.click_zidong()
 
 
 
@@ -100,11 +101,13 @@ import map_shen_mo_liu_chong_tian
 
 
 if __name__ == '__main__':
-
+    opration.activate_game_window()
     while True:
-        time.sleep(3)
+        time.sleep(4)
+        opration.kai_kuangbao()
+        opration.guan_bi()
         current_time = time.localtime()
-        if 56 <= current_time.tm_min < 58:
+        if 55 <= current_time.tm_min < 58:
             map_qi_yuan_sheng_di.gj_shang_gu_yi_ji()
             if current_time.tm_hour in [3, 6, 9, 12, 15, 18]:
                 map_huashan.gj_dian_feng()

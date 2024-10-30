@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
 import pyautogui
+import opration
 import win32con, win32gui, time, math
-
+import threading
+import Find_Pic
 def match_template(image, template, threshold=0.9):
     result = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
     loc = np.where(result >= threshold)
@@ -101,36 +103,70 @@ target_coordinates = {
 }
 
 
+#
+# def move_to_target( target_coord, region=(45, 778, 140, 20)):
+#
+#     try:
+#         start_time = time.time()
+#         while True:
+#             end_time = time.time()
+#             if end_time - start_time > 100:
+#                 break
+#             time.sleep(0.1)
+#             # 获取当前坐标
+#             current_coord = get_current_coordinate(region)
+#
+#
+#
+#             # 计算方向
+#             direction = calculate_direction(current_coord, target_coord)
+#             opration.move_mouse(target_coordinates[direction][0], target_coordinates[direction][1])
+#
+#             opration.send_right_mouse_down(target_coordinates[direction][0], target_coordinates[direction][1])
+#
+#             if reached_target(current_coord, target_coord):
+#                 print(f"到达目标坐标: {target_coord}")
+#                 opration.send_right_mouse_up(target_coordinates[direction][0], target_coordinates[direction][1])
+#
+#                 break  # 目标到达时停止移动
+#
+#
+#             time.sleep(0.05)  # 等待一小段时间后再次检测坐标
+#     finally:
+#         pass
 
-def move_to_target( target_coord, region=(45, 778, 140, 20)):
 
-    try:
-        start_time = time.time()
-        while True:
-            end_time = time.time()
-            if end_time - start_time > 100:
-                break
-            time.sleep(0.1)
-            # 获取当前坐标
-            current_coord = get_current_coordinate(region)
+def move_to_target(target_coord, region=(45, 778, 140, 20)):
 
-            if reached_target(current_coord, target_coord):
-                print(f"到达目标坐标: {target_coord}")
-                pyautogui.mouseUp(button='right')
-                break  # 目标到达时停止移动
+    start_time = time.time()
+    while True:
+        end_time = time.time()
 
-            # 计算方向
-            direction = calculate_direction(current_coord, target_coord)
-            print(direction)
-            # pyautogui.mouseUp(button='right')
-            pyautogui.moveTo(target_coordinates[direction], duration=0.1)
-            pyautogui.mouseDown(button='right')
+        time.sleep(0.5)
+        # 获取当前坐标
+        current_coord = get_current_coordinate(region=region)
 
+        # 计算方向
+        direction = calculate_direction(current_coord, target_coord)
+        opration.move_mouse(target_coordinates[direction][0], target_coordinates[direction][1])
 
+        opration.send_right_mouse_down(target_coordinates[direction][0], target_coordinates[direction][1])
 
-            time.sleep(0.05)  # 等待一小段时间后再次检测坐标
-    finally:
-        pyautogui.mouseUp(button='right')  # 松开鼠标右键
+        if reached_target(current_coord, target_coord):
+            print(f"到达目标坐标: {target_coord}")
+            opration.send_right_mouse_up(target_coordinates[direction][0], target_coordinates[direction][1])
+            break  # 目标到达时停止移动
+        if end_time - start_time > 60:
+            opration.send_right_mouse_up(target_coordinates[direction][0], target_coordinates[direction][1])
+            opration.go_home()
+            break
+        s_h_tag = Find_Pic.find_image_on_screen('img/首饰店.png')
+        if s_h_tag:
+            opration.send_right_mouse_up(target_coordinates[direction][0], target_coordinates[direction][1])
+            opration.go_home()
+            break
+        time.sleep(0.05)  # 等待一小段时间后再次检测坐标
+
 
 
 
@@ -147,12 +183,12 @@ if __name__ == "__main__":
     # 移动窗口到0，0位置
     win32gui.SetWindowPos(window_handle, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOSIZE | win32con.SWP_NOZORDER)
     # 激活窗口
-
+    opration.activate_game_window()
     # # 激活
     # time.sleep(1)
     # pyautogui.click(3, 3)
-    # region = (45, 778, 100, 20)  # 根据需要调整截取区域
+    region = (45, 778, 100, 20)  # 根据需要调整截取区域
     # current_coordinate = get_current_coordinate(region)
-    # destination_coordinate = (333, 339)  # Example target
-    # move_to_target( destination_coordinate, region)
+    destination_coordinate = (333, 339)  # Example target
+    move_to_target( destination_coordinate, region)
 

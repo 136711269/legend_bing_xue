@@ -103,9 +103,14 @@ def go_shen_mo6():
 
 
 def is_monster(x, y):
+    start = time.time()
     # 1 27, 18
     while True:
+
+        if time.time() - start > 608:
+            break
         time.sleep(2)
+        opration.guan_bi()
 
         mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
         if mengchong_tag:
@@ -114,143 +119,153 @@ def is_monster(x, y):
         result = Find_Pic.find_all_images_on_screen('img/怪物.png', region=(300, 183, 516, 324))
         if len(result) == 1:
             re_number.move_to_target((x, y))
-            result = Find_Pic.find_red_color()
-            if not result:
+            result1 = Find_Pic.find_red_color()
+            if not result1:
 
                 break
-        opration.continue_auto_monster()
+        red = Find_Pic.find_red_color()
+        if not red:
+            break
+        opration.click_zidong()
+
 
 
 
 
 def go_shen_mo_mi_jing_6():
-    # opration.go_home()
-    # opration.move_pic_click('img/小秘书.png')
-    # opration.move_pic_click('img/特殊传送.png')
-    # opration.move_pic_click('img/高级传送/神魔六重地.png')
-    # opration.move_pic_click('img/高级传送/神魔之地-大神魔下.png')
-    #
-    # # 一层
-    # mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    # if not mengchong_tag:
-    #
-    #     re_number.move_to_target((121, 115))
-    #     opration.move_pic_click('img/高级传送/神魔1下层.png')
-    #     opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
-    #
-    # # 二层
-    # mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    # if not mengchong_tag:
-    #     re_number.move_to_target((107, 106))
-    #     opration.move_pic_click('img/高级传送/神魔2下层.png')
-    #     opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
-    #
-    # # 三层
-    # mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    # if not mengchong_tag:
-    #     re_number.move_to_target((89, 91))
-    #     opration.move_pic_click('img/高级传送/神魔3下层.png')
-    #     opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
-    #
-    # # 秘境
-    # mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    # if not mengchong_tag:
-    #     re_number.move_to_target((99, 69))
-    #
-    #     opration.move_pic_click('img/高级传送/神魔秘境.png')
-    #     opration.move_pic_click('img/高级传送/神魔秘境-前往探索.png')
-    #
-    # # 第一个框
-    # mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    # if not mengchong_tag:
-    #     re_number.move_to_target((30, 15))
-    #     time.sleep(1)
-    #     red = Find_Pic.find_red_color()
-    #     if red:
-    #         opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-    #         opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
-    #         opration.click_zidong()
-    #         is_monster(29, 18)
-    #         opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-    #         opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+    opration.go_home()
+    opration.move_pic_click('img/小秘书.png')
+    opration.move_pic_click('img/特殊传送.png')
+    opration.move_pic_click('img/高级传送/神魔六重地.png')
+    opration.move_pic_click('img/高级传送/神魔之地-大神魔下.png')
 
-
-    # 第二个框
+    # 一层
     mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
     if not mengchong_tag:
-        re_number.move_to_target((47, 15))
-        # 2个框
+
+        re_number.move_to_target((121, 115))
+        opration.move_pic_click('img/高级传送/神魔1下层.png')
+        opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
+
+    # 二层
+    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+    if not mengchong_tag:
+        re_number.move_to_target((107, 106))
+        opration.move_pic_click('img/高级传送/神魔2下层.png')
+        opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
+
+    # 三层
+    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+    if not mengchong_tag:
+        re_number.move_to_target((89, 91))
+        opration.move_pic_click('img/高级传送/神魔3下层.png')
+        opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
+
+    # 秘境
+    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+    if not mengchong_tag:
+        re_number.move_to_target((99, 69))
+
+        opration.move_pic_click('img/高级传送/神魔秘境.png')
+        opration.move_pic_click('img/高级传送/神魔秘境-前往探索.png')
+
+    # 第一个框
+    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+    if not mengchong_tag:
+        re_number.move_to_target((30, 15))
         time.sleep(1)
         red = Find_Pic.find_red_color()
         if red:
             opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
             opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
             opration.click_zidong()
-            is_monster(47, 19)
-            opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-            opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
-
-    # 第三个框
-    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    if not mengchong_tag:
-        re_number.move_to_target((29, 35))
-        # 一3个框
-        time.sleep(1)
-        red = Find_Pic.find_red_color()
-        if red:
-            opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-            opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
-            opration.click_zidong()
-            is_monster(30, 33)
+            is_monster(29, 18)
             opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
             opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
 
 
-    # 第四个框
-    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    if not mengchong_tag:
-        re_number.move_to_target((49, 33))
-        time.sleep(1)
-        red = Find_Pic.find_red_color()
-        if red:
-            # 一4个框
-            opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-            opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
-            opration.click_zidong()
-            is_monster(50, 36)
-            opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-            opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+            # 第二个框
+            mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+            if not mengchong_tag:
+                re_number.move_to_target((47, 15))
+                # 2个框
+                time.sleep(1)
+                red = Find_Pic.find_red_color()
+                if red:
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
+                    opration.click_zidong()
+                    is_monster(47, 19)
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+
+            # 第三个框
+            mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+            if not mengchong_tag:
+                re_number.move_to_target((29, 33))
+                # 一3个框
+                time.sleep(1)
+                red = Find_Pic.find_red_color()
+                if red:
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
+                    opration.click_zidong()
+                    is_monster(29, 37)
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
 
 
-    # 第五个框
-    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    if not mengchong_tag:
-        re_number.move_to_target((29, 51))
-        # 一5个框
-        opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-        opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
-        opration.click_zidong()
-        is_monster(29,54)
-        opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-        opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+            # 第四个框
+            mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+            if not mengchong_tag:
+                re_number.move_to_target((49, 33))
+                time.sleep(1)
+                red = Find_Pic.find_red_color()
+                if red:
+                    # 一4个框
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
+                    opration.click_zidong()
+                    is_monster(48, 36)
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
 
-    # 第六个框
-    mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
-    if not mengchong_tag:
-        re_number.move_to_target((49, 51))
-        # 一6个框
-        opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-        opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
-        opration.click_zidong()
-        is_monster(49,54)
-        opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
-        opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+
+            # 第五个框
+            mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+            if not mengchong_tag:
+                re_number.move_to_target((29, 51))
+                # 一5个框
+                red = Find_Pic.find_red_color()
+                if red:
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
+                    opration.click_zidong()
+                    is_monster(29,54)
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
+
+            # 第六个框
+            mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+            if not mengchong_tag:
+                re_number.move_to_target((49, 51))
+                red = Find_Pic.find_red_color()
+                if red:
+                # 一6个框
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-我要进入.png')
+                    opration.click_zidong()
+                    is_monster(49,54)
+                    opration.move_pic_click_jia('img/高级传送/神魔秘境-秘境使者.png')
+                    opration.move_pic_click('img/高级传送/神魔秘境-返回.png')
 
     # 去神魔六层
     mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
     if not mengchong_tag:
 
+        re_number.move_to_target((38, 15))
         re_number.move_to_target((19, 13))
+
         opration.move_pic_click('img/高级传送/神魔秘境-我要返回4层.png')
         opration.move_pic_click('img/高级传送/神魔秘境-我要返回4层-确定.png')
 
@@ -263,6 +278,15 @@ def go_shen_mo_mi_jing_6():
         opration.move_pic_click('img/高级传送/神魔之地-神魔进入.png')
         opration.click_zidong()
         opration.auto_monster()
+        re_number.move_to_target((47, 55))
+        opration.move_pic_click('img/高级传送/神魔6下层.png')
+        opration.move_pic_click('img/高级传送/神魔6我要进入.png')
+        re_number.move_to_target((23, 29))
+
+        opration.move_pic_click('img/高级传送/神魔之家.png')
+        opration.move_pic_click('img/高级传送/进入神魔之家.png')
+        opration.click_zidong()
+
 
 
 
