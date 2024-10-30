@@ -1,8 +1,9 @@
 import time
 
 import opration, Find_Pic, re_number, map_huashan, map_qi_yuan_sheng_di
+import map_long_zhi_ling_yu
 
-
+import map_shen_mo_liu_chong_tian
 def go_huo_long3():
 
     opration.move_pic_click('img/小秘书.png')
@@ -93,18 +94,11 @@ def gua_ji_huo_long():
         print('火龙3刷完')
         opration.go_home()
 
-
-
-
-
-import map_shen_mo_liu_chong_tian
-
-
-if __name__ == '__main__':
-    opration.activate_game_window()
+def main1():
+    opration.activate_game_window(window_title="热血华山15区(16:00)")
     while True:
         time.sleep(4)
-        opration.kai_kuangbao()
+        # opration.kai_kuangbao()
         opration.guan_bi()
         current_time = time.localtime()
         if 55 <= current_time.tm_min < 58:
@@ -124,4 +118,23 @@ if __name__ == '__main__':
             go_gu_du_2(1)
         opration.guan_bi()
         opration.continue_auto_monster()
+
+
+def main2():
+    opration.activate_game_window(window_title="热血华山5区(16:00)")
+    while True:
+        time.sleep(4)
+        opration.guan_bi()
+
+
+        mengchong_tag = Find_Pic.find_image_on_screen('img/盟重城.png')
+        if mengchong_tag:
+            map_long_zhi_ling_yu.gj_long_ling_di_xi()
+        opration.guan_bi()
+        opration.continue_auto_monster()
+
+
+
+if __name__ == '__main__':
+    pass
 

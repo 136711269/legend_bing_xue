@@ -31,7 +31,8 @@ def gj_long_ling_di_xi():
     opration.move_pic_click('img/小秘书.png')
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/龙之领域.png')
-    opration.move_pic_click('img/高级传送/我要进入.png')
+    opration.kai_kuangbao()
+
     start = time.time()
     while True:
         end = time.time()
@@ -79,7 +80,7 @@ def gj_long_ling_di_east():
     opration.move_pic_click('img/小秘书.png')
     opration.move_pic_click('img/特殊传送.png')
     opration.move_pic_click('img/高级传送/龙之领域.png')
-    opration.move_pic_click('img/高级传送/我要进入.png')
+
     while True:
         re_number.move_to_target((26, 28))
         opration.move_down(3)
